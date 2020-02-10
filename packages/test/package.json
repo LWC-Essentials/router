@@ -1,0 +1,55 @@
+{
+    "name": "sample-app",
+    "description": "LWC Essentials Router Example",
+    "version": "0.0.0",
+    "author": "Bret Little",
+    "bugs": "https://github.com/LWC-Essentials/router/issues",
+    "dependencies": {
+        "@lwce/router": "^0.0.1",
+        "history": "^4.10.1",
+        "lwc-services": "^1.3.12",
+        "matchit": "^1.0.8"
+    },
+    "devDependencies": {
+        "husky": "^3.1.0",
+        "lint-staged": "^9.5.0"
+    },
+    "engines": {
+        "node": ">=10.0.0"
+    },
+    "homepage": "https://github.com/LWC-Essentials/router",
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "keywords": [
+        "lwc"
+    ],
+    "license": "BSD-3-Clause",
+    "lint-staged": {
+        "**/*.{css,html,js,json,md,ts,yaml,yml}": [
+            "prettier --write"
+        ],
+        "./src/**/*.js": [
+            "eslint"
+        ],
+        "*": [
+            "git add"
+        ]
+    },
+    "repository": "LWC-Essentials/router",
+    "scripts": {
+        "build": "lwc-services build -m production",
+        "build:development": "lwc-services build",
+        "lint": "eslint ./src/**/*.js",
+        "prettier": "prettier --write \"**/*.{css,html,js,json,md,ts,yaml,yml}\"",
+        "prettier:verify": "prettier --list-different \"**/*.{css,html,js,json,md,ts,yaml,yml}\"",
+        "serve": "lwc-services serve",
+        "test:unit": "lwc-services test:unit",
+        "test:unit:coverage": "lwc-services test:unit --coverage",
+        "test:unit:debug": "lwc-services test:unit --debug",
+        "test:unit:watch": "lwc-services test:unit --watch",
+        "watch": "lwc-services watch"
+    }
+}
