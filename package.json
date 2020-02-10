@@ -1,0 +1,28 @@
+{
+  "name": "@lwce/router",
+  "version": "0.0.1",
+  "description": "A LWC router that supports server-side rendering",
+  "main": "index.js",
+  "scripts": {
+    "start": "lerna run watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LWC-Essentials/router.git"
+  },
+  "keywords": [
+    "LWC",
+    "web",
+    "components",
+    "router"
+  ],
+  "author": "Bret Little",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/LWC-Essentials/router/issues"
+  },
+  "homepage": "https://github.com/LWC-Essentials/router#readme",
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}
