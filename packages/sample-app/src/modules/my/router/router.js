@@ -17,8 +17,8 @@ export default class Router extends LightningElement {
             this.removeRoute.bind(this)
         );
 
-        const history = (window.testHistory = createBrowserHistory());
-        this.unlisten = history.listen((location, action) => {
+        this.history = createBrowserHistory();
+        this.unlisten = this.history.listen((location, action) => {
             this.checkRoutes(location);
         });
     }
@@ -59,5 +59,9 @@ export default class Router extends LightningElement {
                 route.callback({ found: false });
             }
         });
+    }
+
+    navigate(e) {
+      this.history.push(e.detail);
     }
 }
