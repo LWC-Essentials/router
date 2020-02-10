@@ -28,6 +28,8 @@ export default class Router extends LightningElement {
     }
 
     addRoute(event) {
+        event.stopPropagation();
+
         this.routes.push({
             ...event.detail,
             parsedRoute: parse(event.detail.path)
@@ -36,6 +38,8 @@ export default class Router extends LightningElement {
     }
 
     removeRoute(event) {
+        event.stopPropagation();
+
         this.routes.push(event.detail);
 
         const indexToRemove = this.routes.findIndex(
@@ -53,7 +57,7 @@ export default class Router extends LightningElement {
         this.routes.map(route => {
             const found = match(location.pathname, [route.parsedRoute]);
             if (found && found.length) {
-                const data = exec(location.pathname, found[0]);
+                const data = exec(location.pathname, found);
                 route.callback({ found: true, data });
             } else {
                 route.callback({ found: false });
@@ -62,6 +66,6 @@ export default class Router extends LightningElement {
     }
 
     navigate(e) {
-      this.history.push(e.detail);
+        this.history.push(e.detail);
     }
 }
