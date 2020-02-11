@@ -1,0 +1,16 @@
+{
+  "modules": [
+    {
+      "name": "lwce/router",
+      "path": "src/modules/lwce/router/router.js"
+    },
+    {
+      "name": "lwce/link",
+      "path": "src/modules/lwce/link/link.js"
+    },
+    {
+      "name": "lwce/route",
+      "path": "src/modules/lwce/route/route.js"
+    }
+  ]
+}

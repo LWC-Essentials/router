@@ -1,18 +1,18 @@
 <template>
-  <my-router>
+  <lwce-router>
     <ul>
-      <li><my-link href="/">Home</my-link></li>
-      <li><my-link href="/cart">Cart</my-link></li>
-      <li><my-link href="/products/1234">Product</my-link></li>
+      <li><lwce-link href="/">Home</lwce-link></li>
+      <li><lwce-link href="/cart">Cart</lwce-link></li>
+      <li><lwce-link href="/products/1234">Product</lwce-link></li>
     </ul>
-    <my-route path="/">
+    <lwce-route path="/">
       <h1>Home</h1>
-    </my-route>
-    <my-route path="/cart">
+    </lwce-route>
+    <lwce-route path="/cart">
       <h1>Cart</h1>
-    </my-route>
-    <my-route path="/products/:productId">
+    </lwce-route>
+    <lwce-route path="/products/:productId">
       <my-product></my-product>
-    </my-route>
-  </my-router>
+    </lwce-route>
+  </lwce-router>
 </template>
