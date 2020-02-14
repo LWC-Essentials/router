@@ -1,0 +1,13 @@
+<template>
+  <h1>Settings</h1>
+  <ul>
+    <li><lwce-link href="/settings/">Profile</lwce-link></li>
+    <li><lwce-link href="/settings/team">Team</lwce-link></li>
+  </ul>
+  <lwce-route path="/" exact>
+    <my-profile></my-profile>
+  </lwce-route>
+  <lwce-route path="/team">
+    <h2>Team</h2>
+  </lwce-route>
+</template>

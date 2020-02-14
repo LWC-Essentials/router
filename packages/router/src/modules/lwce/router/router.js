@@ -1,71 +1,69 @@
-import { LightningElement } from 'lwc';
-import { parse, match, exec } from 'matchit';
-import { createBrowserHistory } from 'history';
+import {LightningElement} from 'lwc';
+import {createBrowserHistory} from 'history';
+import matchPath from './matchPath.js';
 
 export default class Router extends LightningElement {
-    routes = [];
+  routes = [];
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.addEventListener(
-            'lwcerouter_addrouteeventlistener',
-            this.addRoute.bind(this)
-        );
-        this.addEventListener(
-            'lwcerouter_removeeventlistener',
-            this.removeRoute.bind(this)
-        );
+    this.addEventListener(
+      'lwcerouter_addrouteeventlistener',
+      this.addRoute.bind(this),
+    );
+    this.addEventListener(
+      'lwcerouter_removeeventlistener',
+      this.removeRoute.bind(this),
+    );
 
-        this.history = createBrowserHistory();
-        this.unlisten = this.history.listen((location, action) => {
-            this.checkRoutes(location);
-        });
-    }
+    this.history = createBrowserHistory();
+    this.unlisten = this.history.listen((location, action) => {
+      this.checkRoutes(location);
+    });
+  }
 
-    disconnectedCallback() {
-        this.unlisten();
-    }
+  disconnectedCallback() {
+    this.unlisten();
+  }
 
-    addRoute(event) {
-        event.stopPropagation();
+  addRoute(event) {
+    event.stopPropagation();
 
-        this.routes.push({
-            ...event.detail,
-            parsedRoute: parse(event.detail.path)
-        });
-        this.checkRoutes(window.location);
-    }
+    this.routes.push({
+      ...event.detail
+    });
+    this.checkRoutes(window.location);
+  }
 
-    removeRoute(event) {
-        event.stopPropagation();
+  removeRoute(event) {
+    event.stopPropagation();
 
-        this.routes.push(event.detail);
+    this.routes.push(event.detail);
 
-        const indexToRemove = this.routes.findIndex(
-            route =>
-                route.path === detail.path && route.callback === detail.callback
-        );
+    const indexToRemove = this.routes.findIndex(
+      route => route.path === detail.path && route.callback === detail.callback,
+    );
 
-        if (routeToRemove === -1) console.warn('Cannot find route to remove!');
-        else this.routes.splice(indexToRemove, 1);
+    if (routeToRemove === -1) console.warn('Cannot find route to remove!');
+    else this.routes.splice(indexToRemove, 1);
 
-        this.checkRoutes(window.location);
-    }
+    this.checkRoutes(window.location);
+  }
 
-    checkRoutes(location) {
-        this.routes.map(route => {
-            const found = match(location.pathname, [route.parsedRoute]);
-            if (found && found.length) {
-                const data = exec(location.pathname, found);
-                route.callback({ found: true, data });
-            } else {
-                route.callback({ found: false });
-            }
-        });
-    }
+  checkRoutes(location) {
+    this.routes.map(route => {
+      const found = matchPath(location.pathname, route);
 
-    navigate(e) {
-        this.history.push(e.detail);
-    }
+      if (found) {
+        route.callback({found: true, data: found.params});
+      } else {
+        route.callback({found: false});
+      }
+    });
+  }
+
+  navigate(e) {
+    this.history.push(e.detail);
+  }
 }

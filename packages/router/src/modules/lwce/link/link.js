@@ -1,11 +1,9 @@
 import { LightningElement, api } from 'lwc';
 
 export default class Link extends LightningElement {
-    @api
-    title;
+    @api title;
 
-    @api
-    href;
+    @api href;
 
     navigate(e) {
         e.preventDefault();

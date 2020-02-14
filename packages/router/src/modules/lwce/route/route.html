@@ -1,3 +1,7 @@
 <template>
-  <slot></slot>
+  <div>
+    <template if:true={rendered}>
+      <slot></slot>
+    </template>
+  </div>
 </template>

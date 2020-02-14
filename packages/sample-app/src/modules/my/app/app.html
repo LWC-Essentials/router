@@ -3,13 +3,17 @@
     <ul>
       <li><lwce-link href="/">Home</lwce-link></li>
       <li><lwce-link href="/cart">Cart</lwce-link></li>
+      <li><lwce-link href="/settings/">Settings</lwce-link></li>
       <li><lwce-link href="/products/1234">Product</lwce-link></li>
     </ul>
-    <lwce-route path="/">
+    <lwce-route path="/" exact>
       <h1>Home</h1>
     </lwce-route>
     <lwce-route path="/cart">
       <h1>Cart</h1>
+    </lwce-route>
+    <lwce-route path="/settings">
+      <my-settings></my-settings>
     </lwce-route>
     <lwce-route path="/products/:productId">
       <my-product></my-product>
