@@ -24,7 +24,7 @@ register(routeParams, eventTarget => {
 
     function handleDisconnect() {
         eventTarget.dispatchEvent(
-            new CustomEvent('lwcerouter_removewireadapter', routeParamsChanged)
+            new LinkContextEvent('lwcerouter_removewireadapter', routeParamsChanged)
         );
     }
 
