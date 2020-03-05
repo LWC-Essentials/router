@@ -18,9 +18,9 @@ function combinePaths(a, b) {
 
 export default class Route extends LightningElement {
   @api path;
-  @api strict=false;
-  @api sensitive=false;
-  @api exact=false;
+  @api strict = false;
+  @api sensitive = false;
+  @api exact = false;
 
   routeParams = {};
   rendered = false;

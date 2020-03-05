@@ -1,8 +1,10 @@
-import {LightningElement} from 'lwc';
+import {LightningElement, api} from 'lwc';
 import {createBrowserHistory} from 'history';
 import matchPath from './matchPath.js';
 
 export default class Router extends LightningElement {
+  @api base = '';
+
   routes = [];
 
   constructor() {
@@ -31,7 +33,7 @@ export default class Router extends LightningElement {
     event.stopPropagation();
 
     this.routes.push({
-      ...event.detail
+      ...event.detail,
     });
     this.checkRoutes(window.location);
   }
@@ -53,7 +55,10 @@ export default class Router extends LightningElement {
 
   checkRoutes(location) {
     this.routes.map(route => {
-      const found = matchPath(location.pathname, route);
+      const found = matchPath(location.pathname, {
+        ...route,
+        path: this.base + route.path,
+      });
 
       if (found) {
         route.callback({found: true, data: found.params});
@@ -64,6 +69,6 @@ export default class Router extends LightningElement {
   }
 
   navigate(e) {
-    this.history.push(e.detail);
+    this.history.push(this.base + e.detail);
   }
 }
