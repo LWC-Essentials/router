@@ -26,9 +26,9 @@ export default {
             resolveId(id) {
                 if (id === 'lwc') {
                     return require('lwc').getModulePath('engine');
-                } else if (id === '@lwc\/wire-service') {
+                } else if (id === '@lwc/wire-service') {
                     return require('lwc').getModulePath('wire-service');
-                } else if (id === '@lwc\/synthetic-shadow') {
+                } else if (id === '@lwc/synthetic-shadow') {
                     return require('lwc').getModulePath('synthetic-shadow');
                 }
             }

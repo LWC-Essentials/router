@@ -1,6 +1,7 @@
 # @lwce/router Example Application
 
 ## Setup
+
 Run `npm install && npm start` and navigate to http://localhost:8080
 in your browser.
 
