@@ -1,6 +1,6 @@
 {
   "name": "@lwce/router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A LWC router that supports server-side rendering",
   "keywords": [
     "LWC",
@@ -17,7 +17,7 @@
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "publishConfig": {
     "access": "public"
@@ -35,5 +35,17 @@
   "dependencies": {
     "history": "^4.10.1",
     "path-to-regexp": "^6.1.0"
+  },
+  "lwc": {
+    "modules": [
+      {
+        "dir": "src/modules"
+      }
+    ],
+    "expose": [
+      "lwce/link",
+      "lwce/route",
+      "lwce/router"
+    ]
   }
 }

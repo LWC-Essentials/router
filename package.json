@@ -4,7 +4,10 @@
   "description": "A LWC router that supports server-side rendering",
   "main": "index.js",
   "scripts": {
-    "start": "lerna run watch"
+    "start": "lerna run start",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "postinstall": "npm run bootstrap"
   },
   "repository": {
     "type": "git",
@@ -24,8 +27,5 @@
   "homepage": "https://github.com/LWC-Essentials/router#readme",
   "devDependencies": {
     "lerna": "^3.20.2"
-  },
-  "dependencies": {
-    "@lwc/wire-service": "^1.1.1"
   }
 }
