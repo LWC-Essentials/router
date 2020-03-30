@@ -18,7 +18,7 @@ The primary component which must wrap all other components that have routing app
 
 **Props:**
 
-*base* The base URL for all locations. If your app is served
+`base`: The base URL for all locations. If your app is served
 from a sub-directory on your server, you’ll want to set this to the
 sub-directory. A properly formatted basename should have a leading
 slash, but no trailing slash.
@@ -36,17 +36,17 @@ Defines a route who's content will be rendered when the URL is active
 
 **Props:**
 
-*children* Whatever HTML is passed within the slot will only be rendered if the URL is active.
+`children`: Whatever HTML is passed within the slot will only be rendered if the URL is active.
 
-*path* Any valid URL path or array of paths that path-to-regexp@^1.7.0 understands.
+`path`: Any valid URL path or array of paths that path-to-regexp@^1.7.0 understands.
 
-*strict* When true, a path that has a trailing slash will only match a
+`strict`: When true, a path that has a trailing slash will only match a
 location.pathname with a trailing slash
 
-*exact*  When true, will only match if the path matches the
+`exact`: When true, will only match if the path matches the
 location.pathname exactly
 
-*sensitive* When true, will match if the path is case sensitive.
+`sensitive`: When true, will match if the path is case sensitive.
 
 Example:
 
@@ -61,9 +61,9 @@ Define a link to navigate between your routes
 
 **Props:**
 
-*title* The accessible text representing your link
+`title`: The accessible text representing your link
 
-*href* A string representation of your destination. This can be a relative path.
+`href`: A string representation of your destination. This can be a relative path.
 
 Example:
 
