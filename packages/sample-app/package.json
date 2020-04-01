@@ -1,11 +1,11 @@
 {
     "name": "sample-app",
     "description": "LWC Essentials Router Example",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "author": "Bret Little",
     "bugs": "https://github.com/LWC-Essentials/router/issues",
     "dependencies": {
-        "@lwce/router": "^0.2.0",
+        "@lwce/router": "^0.2.1",
         "history": "^4.10.1",
         "lwc": "^1.4.0-alpha3",
         "matchit": "^1.0.8"
