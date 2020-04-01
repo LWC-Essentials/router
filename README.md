@@ -1,5 +1,6 @@
-# @lwce/router [![npm
-version](https://img.shields.io/npm/v/@lwce/router?style=flat)](https://www.npmjs.com/package/@lwce/router)
+# @lwce/router
+
+[![npm version](https://img.shields.io/npm/v/@lwce/router?style=flat)](https://www.npmjs.com/package/@lwce/router)
 
 A lightning web component for building declarative routing within single-page applications.
 
