@@ -1,6 +1,5 @@
 import {LightningElement, api} from 'lwc';
 import route from './route.html';
-import empty from './empty.html';
 
 let id = 0;
 

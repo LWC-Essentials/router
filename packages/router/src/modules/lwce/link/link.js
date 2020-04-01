@@ -2,8 +2,10 @@ import {LightningElement, api} from 'lwc';
 
 export default class Link extends LightningElement {
   @api title;
-
   @api href;
+  @api class;
+  @api role;
+  @api ariaPressed;
 
   navigate(e) {
     e.preventDefault();
