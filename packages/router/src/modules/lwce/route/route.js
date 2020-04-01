@@ -123,6 +123,8 @@ export default class Route extends LightningElement {
   }
 
   sendRouteParams() {
-    this.wireAdapters.forEach(adapter => adapter(this.routeParams));
+    if (this.rendered) {
+      this.wireAdapters.forEach(adapter => adapter(this.routeParams));
+    }
   }
 }
