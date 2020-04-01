@@ -1,5 +1,7 @@
-# router
-A lightning web bomponent for building declarative routing within single-page applications.
+# @lwce/router [![npm
+version](https://img.shields.io/npm/v/@lwce/router?style=flat)](https://www.npmjs.com/package/@lwce/router)
+
+A lightning web component for building declarative routing within single-page applications.
 
 Learn more about from the [API documentation](./packages/router/README.md).
 

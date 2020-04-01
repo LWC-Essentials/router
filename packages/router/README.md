@@ -1,6 +1,6 @@
 # `@lwce/router`
 
-A lightning web bomponent for building declarative routing within
+A lightning web component for building declarative routing within
 single-page applications.
 
 ## Usage
@@ -93,4 +93,22 @@ And usage within the template:
 <template>
   <h1>Product: {params.productId}</h1>
 </template>
+```
+
+### history
+Use the `history` wire adapter to imperatively change routes.
+
+Example:
+
+```js
+import { LightningElement, api, wire } from 'lwc';
+import { history } from '@lwce/router';
+
+export default class Link extends LightningElement {
+  @wire(history) history;
+
+  onClickHandler(e) {
+    this.history.push('/settings');
+  }
+}
 ```

@@ -11,6 +11,10 @@ export default class Router extends LightningElement {
     super();
 
     this.addEventListener(
+      'lwcerouter_addhistoryadapter',
+      this.addHistoryAdapter.bind(this),
+    );
+    this.addEventListener(
       'lwcerouter_addrouteeventlistener',
       this.addRoute.bind(this),
     );
@@ -66,6 +70,10 @@ export default class Router extends LightningElement {
         route.callback({found: false});
       }
     });
+  }
+
+  addHistoryAdapter(e) {
+    e.detail(this.history);
   }
 
   navigate(e) {
