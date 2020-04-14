@@ -36,6 +36,9 @@
     "history": "^4.10.1",
     "path-to-regexp": "^6.1.0"
   },
+  "peerDependencies": {
+    "lwc": "^1.4.0"
+  },
   "lwc": {
     "modules": [
       {
