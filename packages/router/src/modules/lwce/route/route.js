@@ -57,7 +57,7 @@ export default class Route extends LightningElement {
   }
 
   interceptChildRouteEvent(name, event) {
-    if (event.detail.uniqueId !== this.uniqueId) {
+    if (event.detail.uniqueId !== this.uniqueId && !this.default) {
       event.stopPropagation();
       this.dispatchEvent(
         new CustomEvent(name, {

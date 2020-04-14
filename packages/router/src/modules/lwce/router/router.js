@@ -4,8 +4,11 @@ import matchPath from './matchPath.js';
 
 export default class Router extends LightningElement {
   @api base = '';
-
   routes = [];
+
+  @api getHistory() {
+    return this.history;
+  }
 
   constructor() {
     super();
