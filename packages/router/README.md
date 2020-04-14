@@ -48,6 +48,8 @@ location.pathname exactly
 
 `sensitive`: When true, will match if the path is case sensitive.
 
+`default`: When true, will match if no other paths are matched. Use for 404 pages.
+
 Example:
 
 ```html

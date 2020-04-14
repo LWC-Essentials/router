@@ -58,16 +58,32 @@ export default class Router extends LightningElement {
   }
 
   checkRoutes(location) {
-    this.routes.map(route => {
+    let aRouteMatched = false;
+
+    this.routes.forEach(route => {
+      if (route.default) return;
+
+      if (route.path === '*') {
+        aRouteMatched = true;
+        return route.callback({found: true});
+      }
+
       const found = matchPath(location.pathname, {
         ...route,
         path: this.base + route.path,
       });
 
       if (found) {
+        aRouteMatched = true;
         route.callback({found: true, data: found.params});
       } else {
         route.callback({found: false});
+      }
+    });
+
+    this.routes.forEach(route => {
+      if (route.default) {
+        route.callback({found: !aRouteMatched});
       }
     });
   }

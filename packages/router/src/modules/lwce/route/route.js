@@ -1,5 +1,5 @@
-import {LightningElement, api} from 'lwc';
-import route from './route.html';
+import { LightningElement, api } from "lwc";
+import route from "./route.html";
 
 let id = 0;
 
@@ -8,7 +8,7 @@ function getUniqueId() {
 }
 
 function combinePaths(a, b) {
-  if (a.charAt(a.length - 1) === '/' && b.charAt(0) === '/') {
+  if (a.charAt(a.length - 1) === "/" && b.charAt(0) === "/") {
     return a + b.substring(1);
   } else {
     return a + b;
@@ -20,6 +20,7 @@ export default class Route extends LightningElement {
   @api strict = false;
   @api sensitive = false;
   @api exact = false;
+  @api default = false;
 
   routeParams = {};
   rendered = false;
@@ -32,29 +33,26 @@ export default class Route extends LightningElement {
     this.routeChange = this._routeChange.bind(this);
 
     this.addEventListener(
-      'lwcerouter_addwireadapter',
-      this.addWireAdapter.bind(this),
+      "lwcerouter_addwireadapter",
+      this.addWireAdapter.bind(this)
     );
 
     this.addEventListener(
-      'lwcerouter_removewireadapter',
-      this.removeWireAdapter.bind(this),
+      "lwcerouter_removewireadapter",
+      this.removeWireAdapter.bind(this)
     );
 
     this.addEventListener(
-      'lwcerouter_addrouteeventlistener',
+      "lwcerouter_addrouteeventlistener",
       this.interceptChildRouteEvent.bind(
         this,
-        'lwcerouter_addrouteeventlistener',
-      ),
+        "lwcerouter_addrouteeventlistener"
+      )
     );
 
     this.addEventListener(
-      'lwcerouter_removeeventlistener',
-      this.interceptChildRouteEvent.bind(
-        this,
-        'lwcerouter_removeeventlistener',
-      ),
+      "lwcerouter_removeeventlistener",
+      this.interceptChildRouteEvent.bind(this, "lwcerouter_removeeventlistener")
     );
   }
 
@@ -70,16 +68,24 @@ export default class Route extends LightningElement {
           },
           bubbles: true,
           composed: true,
-        }),
+        })
       );
     }
   }
 
   connectedCallback() {
+    if (
+      this.default &&
+      (this.path || this.exact || this.sensitive || this.strict)
+    ) {
+      throw new Error("A default route cannot have other parameters!");
+    }
+
     this.dispatchEvent(
-      new CustomEvent('lwcerouter_addrouteeventlistener', {
+      new CustomEvent("lwcerouter_addrouteeventlistener", {
         detail: {
           path: this.path,
+          default: this.default,
           exact: this.exact,
           sensitive: this.sensitive,
           strict: this.strict,
@@ -88,24 +94,24 @@ export default class Route extends LightningElement {
         },
         bubbles: true,
         composed: true,
-      }),
+      })
     );
   }
 
   disconnectedCallback() {
     this.dispatchEvent(
-      new CustomEvent('lwcerouter_removeeventlistener', {
+      new CustomEvent("lwcerouter_removeeventlistener", {
         detail: {
           path: this.path,
           callback: this.routeChange,
         },
         bubbles: true,
         composed: true,
-      }),
+      })
     );
   }
 
-  _routeChange({found, data = {}}) {
+  _routeChange({ found, data = {} }) {
     this.rendered = found;
     this.routeParams = data;
     this.sendRouteParams();
@@ -124,7 +130,7 @@ export default class Route extends LightningElement {
 
   sendRouteParams() {
     if (this.rendered) {
-      this.wireAdapters.forEach(adapter => adapter(this.routeParams));
+      this.wireAdapters.forEach((adapter) => adapter(this.routeParams));
     }
   }
 }
