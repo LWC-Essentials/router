@@ -1,34 +1,19 @@
 export class history {
-  connected = false;
+  static configSchema = {};
+  static contextSchema = {};
+
   constructor(dataCallback) {
     this.dataCallback = dataCallback;
+    this.dataCallback({});
   }
 
-  update(config) {
+  update(config, context) {
     this.config = config;
-    this.setup();
-  }
-
-  historyParamsChanged(history) {
-    this.dataCallback(history);
+    this.dataCallback(context);
   }
 
   connect() {
-    this.connected = true;
-    this.setup();
   }
 
   disconnect() {}
-
-  setup() {
-    if (this.connected && this.config) {
-      this.config.target.dispatchEvent(
-        new CustomEvent("lwcerouter_addhistoryadapter", {
-          detail: historyParamsChanged.bind(this),
-          composed: true,
-          bubbles: true,
-        })
-      );
-    }
-  }
 }

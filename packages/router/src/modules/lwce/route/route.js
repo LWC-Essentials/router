@@ -1,5 +1,8 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, api, createContextProvider } from "lwc";
+import { routeParams } from "../../../wire-adapters/route-params";
 import route from "./route.html";
+
+const routeParamsContextProvider = createContextProvider(routeParams);
 
 let id = 0;
 
@@ -24,6 +27,7 @@ export default class Route extends LightningElement {
 
   routeParams = {};
   rendered = false;
+  setup = false;
   wireAdapters = [];
 
   constructor() {
@@ -31,16 +35,6 @@ export default class Route extends LightningElement {
 
     this.uniqueId = getUniqueId();
     this.routeChange = this._routeChange.bind(this);
-
-    this.addEventListener(
-      "lwcerouter_addwireadapter",
-      this.addWireAdapter.bind(this)
-    );
-
-    this.addEventListener(
-      "lwcerouter_removewireadapter",
-      this.removeWireAdapter.bind(this)
-    );
 
     this.addEventListener(
       "lwcerouter_addrouteeventlistener",
@@ -54,6 +48,23 @@ export default class Route extends LightningElement {
       "lwcerouter_removeeventlistener",
       this.interceptChildRouteEvent.bind(this, "lwcerouter_removeeventlistener")
     );
+  }
+
+
+  renderedCallback() {
+    if (!this.setup) {
+      this.setup = true;
+
+      routeParamsContextProvider(this, {
+        consumerConnectedCallback: consumer => {
+          this.wireAdapters.push(consumer);
+          this.sendRouteParams();
+        },
+        consumerDisconnectedCallback: consumer => {
+          this.wireAdapters.splice(this.wireAdapters.indexOf(consumer), 1);
+        }
+      });
+    }
   }
 
   interceptChildRouteEvent(name, event) {
@@ -117,20 +128,9 @@ export default class Route extends LightningElement {
     this.sendRouteParams();
   }
 
-  addWireAdapter(event) {
-    event.stopPropagation();
-    this.wireAdapters.push(event.detail);
-    this.sendRouteParams();
-  }
-
-  removeWireAdapter(event) {
-    event.stopPropagation();
-    this.wireAdapters.splice(this.wireAdapters.indexOf(event.detail), 1);
-  }
-
   sendRouteParams() {
     if (this.rendered) {
-      this.wireAdapters.forEach((adapter) => adapter(this.routeParams));
+      this.wireAdapters.forEach((adapter) => adapter.provide(this.routeParams));
     }
   }
 }

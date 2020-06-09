@@ -1,53 +1,20 @@
 export class routeParams {
-  connected = false;
+  static configSchema = {};
+  static contextSchema = {};
 
   constructor(dataCallback) {
     this.dataCallback = dataCallback;
     this.dataCallback({});
-    this.routeParamsChanged = this._routeParamsChanged.bind(this);
   }
 
-  update(config, a, b) {
+  update(config, context) {
     this.config = config;
-    this.setup();
-  }
-
-  _routeParamsChanged(routeParams) {
-    this.dataCallback(routeParams);
+    this.dataCallback(context);
   }
 
   connect() {
-    this.connected = true;
-    this.setup();
-  }
-
-  setup() {
-    if (this.connected && this.config) {
-      this.config.target.dispatchEvent(
-        new CustomEvent(
-          "lwcerouter_addwireadapter",
-          {
-            bubbles: true,
-            composed: true,
-            detail: this.routeParamsChanged
-          }
-        )
-      );
-    }
   }
 
   disconnect() {
-    if (this.config) {
-      this.config.target.dispatchEvent(
-        new CustomEvent(
-          "lwcerouter_removewireadapter",
-          {
-            bubbles: true,
-            composed: true,
-            detail: this.routeParamsChanged
-          }
-        )
-      );
-    }
   }
 }
