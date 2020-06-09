@@ -9,7 +9,7 @@ export class routeParams {
 
   update(config, context) {
     this.config = config;
-    this.dataCallback(context);
+    if (context) this.dataCallback(context);
   }
 
   connect() {
