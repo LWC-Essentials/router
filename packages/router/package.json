@@ -37,7 +37,7 @@
     "path-to-regexp": "^6.1.0"
   },
   "peerDependencies": {
-    "lwc": "^1.4.0"
+    "lwc": "^1.7.1"
   },
   "lwc": {
     "modules": [

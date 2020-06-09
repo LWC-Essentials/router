@@ -1,10 +1,14 @@
-import {LightningElement, api} from 'lwc';
-import {createBrowserHistory} from 'history';
-import matchPath from './matchPath.js';
+import { LightningElement, api, createContextProvider } from "lwc";
+import { createBrowserHistory } from "history";
+import matchPath from "./matchPath.js";
+import { history } from "../../../wire-adapters/history";
+
+const historyContextProvider = createContextProvider(history);
 
 export default class Router extends LightningElement {
-  @api base = '';
+  @api base = "";
   routes = [];
+  setup = false;
 
   @api getHistory() {
     return this.history;
@@ -14,22 +18,30 @@ export default class Router extends LightningElement {
     super();
 
     this.addEventListener(
-      'lwcerouter_addhistoryadapter',
-      this.addHistoryAdapter.bind(this),
+      "lwcerouter_addrouteeventlistener",
+      this.addRoute.bind(this)
     );
     this.addEventListener(
-      'lwcerouter_addrouteeventlistener',
-      this.addRoute.bind(this),
-    );
-    this.addEventListener(
-      'lwcerouter_removeeventlistener',
-      this.removeRoute.bind(this),
+      "lwcerouter_removeeventlistener",
+      this.removeRoute.bind(this)
     );
 
     this.history = createBrowserHistory();
     this.unlisten = this.history.listen((location, action) => {
       this.checkRoutes(location);
     });
+  }
+
+  renderedCallback() {
+    if (!this.setup) {
+      this.setup = true;
+
+      historyContextProvider(this, {
+        consumerConnectedCallback: consumer => {
+          consumer.provide(this.history);
+        },
+      });
+    }
   }
 
   disconnectedCallback() {
@@ -51,10 +63,11 @@ export default class Router extends LightningElement {
     this.routes.push(event.detail);
 
     const indexToRemove = this.routes.findIndex(
-      route => route.path === detail.path && route.callback === detail.callback,
+      (route) =>
+        route.path === detail.path && route.callback === detail.callback
     );
 
-    if (routeToRemove === -1) console.warn('Cannot find route to remove!');
+    if (routeToRemove === -1) console.warn("Cannot find route to remove!");
     else this.routes.splice(indexToRemove, 1);
 
     this.checkRoutes(window.location);
@@ -63,12 +76,12 @@ export default class Router extends LightningElement {
   checkRoutes(location) {
     let aRouteMatched = false;
 
-    this.routes.forEach(route => {
+    this.routes.forEach((route) => {
       if (route.default) return;
 
-      if (route.path === '*') {
+      if (route.path === "*") {
         aRouteMatched = true;
-        return route.callback({found: true});
+        return route.callback({ found: true });
       }
 
       const found = matchPath(location.pathname, {
@@ -78,21 +91,17 @@ export default class Router extends LightningElement {
 
       if (found) {
         aRouteMatched = true;
-        route.callback({found: true, data: found.params});
+        route.callback({ found: true, data: found.params });
       } else {
-        route.callback({found: false});
+        route.callback({ found: false });
       }
     });
 
-    this.routes.forEach(route => {
+    this.routes.forEach((route) => {
       if (route.default) {
-        route.callback({found: !aRouteMatched});
+        route.callback({ found: !aRouteMatched });
       }
     });
-  }
-
-  addHistoryAdapter(e) {
-    e.detail(this.history);
   }
 
   navigate(e) {

@@ -1,28 +1,19 @@
-import {
-    register,
-    ValueChangedEvent,
-    LinkContextEvent
-} from '@lwc/wire-service';
+export class history {
+  static configSchema = {};
+  static contextSchema = {};
 
-export const history = Symbol('LWCE History');
+  constructor(dataCallback) {
+    this.dataCallback = dataCallback;
+    this.dataCallback({});
+  }
 
-register(history, eventTarget => {
-    function historyParamsChanged(history) {
-        eventTarget.dispatchEvent(new ValueChangedEvent(history));
-    }
+  update(config, context) {
+    this.config = config;
+    this.dataCallback(context);
+  }
 
-    function handleConfig(options) {}
+  connect() {
+  }
 
-    function handleConnect() {
-        eventTarget.dispatchEvent(
-            new LinkContextEvent(
-                'lwcerouter_addhistoryadapter',
-                historyParamsChanged
-            )
-        );
-    }
-
-    // Connect the wire adapter
-    eventTarget.addEventListener('config', handleConfig);
-    eventTarget.addEventListener('connect', handleConnect);
-});
+  disconnect() {}
+}

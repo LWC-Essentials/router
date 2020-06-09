@@ -1,35 +1,20 @@
-import {
-    register,
-    ValueChangedEvent,
-    LinkContextEvent
-} from '@lwc/wire-service';
+export class routeParams {
+  static configSchema = {};
+  static contextSchema = {};
 
-export const routeParams = Symbol('LWCE Router Params');
+  constructor(dataCallback) {
+    this.dataCallback = dataCallback;
+    this.dataCallback({});
+  }
 
-register(routeParams, eventTarget => {
-    function routeParamsChanged(routeParams) {
-        eventTarget.dispatchEvent(new ValueChangedEvent(routeParams));
-    }
+  update(config, context) {
+    this.config = config;
+    this.dataCallback(context);
+  }
 
-    function handleConfig(options) {}
+  connect() {
+  }
 
-    function handleConnect() {
-        eventTarget.dispatchEvent(
-            new LinkContextEvent(
-                'lwcerouter_addwireadapter',
-                routeParamsChanged
-            )
-        );
-    }
-
-    function handleDisconnect() {
-        eventTarget.dispatchEvent(
-            new LinkContextEvent('lwcerouter_removewireadapter', routeParamsChanged)
-        );
-    }
-
-    // Connect the wire adapter
-    eventTarget.addEventListener('config', handleConfig);
-    eventTarget.addEventListener('connect', handleConnect);
-    eventTarget.addEventListener('disconnect', handleDisconnect);
-});
+  disconnect() {
+  }
+}
