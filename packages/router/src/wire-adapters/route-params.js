@@ -1,35 +1,53 @@
-import {
-    register,
-    ValueChangedEvent,
-    LinkContextEvent
-} from '@lwc/wire-service';
+export class routeParams {
+  connected = false;
 
-export const routeParams = Symbol('LWCE Router Params');
+  constructor(dataCallback) {
+    this.dataCallback = dataCallback;
+    this.dataCallback({});
+    this.routeParamsChanged = this._routeParamsChanged.bind(this);
+  }
 
-register(routeParams, eventTarget => {
-    function routeParamsChanged(routeParams) {
-        eventTarget.dispatchEvent(new ValueChangedEvent(routeParams));
+  update(config, a, b) {
+    this.config = config;
+    this.setup();
+  }
+
+  _routeParamsChanged(routeParams) {
+    this.dataCallback(routeParams);
+  }
+
+  connect() {
+    this.connected = true;
+    this.setup();
+  }
+
+  setup() {
+    if (this.connected && this.config) {
+      this.config.target.dispatchEvent(
+        new CustomEvent(
+          "lwcerouter_addwireadapter",
+          {
+            bubbles: true,
+            composed: true,
+            detail: this.routeParamsChanged
+          }
+        )
+      );
     }
+  }
 
-    function handleConfig(options) {}
-
-    function handleConnect() {
-        eventTarget.dispatchEvent(
-            new LinkContextEvent(
-                'lwcerouter_addwireadapter',
-                routeParamsChanged
-            )
-        );
+  disconnect() {
+    if (this.config) {
+      this.config.target.dispatchEvent(
+        new CustomEvent(
+          "lwcerouter_removewireadapter",
+          {
+            bubbles: true,
+            composed: true,
+            detail: this.routeParamsChanged
+          }
+        )
+      );
     }
-
-    function handleDisconnect() {
-        eventTarget.dispatchEvent(
-            new LinkContextEvent('lwcerouter_removewireadapter', routeParamsChanged)
-        );
-    }
-
-    // Connect the wire adapter
-    eventTarget.addEventListener('config', handleConfig);
-    eventTarget.addEventListener('connect', handleConnect);
-    eventTarget.addEventListener('disconnect', handleDisconnect);
-});
+  }
+}
