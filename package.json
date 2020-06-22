@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "A LWC router that supports server-side rendering",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "lerna run start",
     "bootstrap": "lerna bootstrap",

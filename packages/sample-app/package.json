@@ -1,6 +1,7 @@
 {
     "name": "sample-app",
     "description": "LWC Essentials Router Example",
+    "private": "true",
     "version": "0.4.2",
     "author": "Bret Little",
     "bugs": "https://github.com/LWC-Essentials/router/issues",
