@@ -5,7 +5,9 @@ single-page applications.
 
 ## Usage
 
-Install: `npm install --save @lwce/router`
+1. Install: `npm install --save @lwce/router`
+2. Add `{"npm": "@lwce/router"}` to your `lwc.config.json` for module resolution. [See example](https://github.com/LWC-Essentials/router/blob/master/packages/sample-app/lwc.config.json)
+
 
 Note: it is highly recommended that the `synthetic-shadow` be used.
 Currently declarative routing is impossible with the native shadow dom,

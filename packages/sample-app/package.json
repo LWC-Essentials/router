@@ -55,6 +55,6 @@
     "scripts": {
         "start": "npm run build && npm run serve",
         "build": "rollup -c rollup.config.js",
-        "serve": "static -p 8080 src"
+        "serve": "static --spa -p 8080 src"
     }
 }
