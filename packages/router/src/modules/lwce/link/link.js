@@ -5,10 +5,7 @@ export default class Link extends LightningElement {
   @api href;
   @api role;
   @api ariaPressed;
-
-  get className() {
-    return this.getAttribute('class');
-  }
+  @api className;
 
   navigate(e) {
     e.preventDefault();
