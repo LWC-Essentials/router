@@ -1,6 +1,6 @@
 {
   "name": "@lwce/router",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "A LWC router that supports server-side rendering",
   "keywords": [
     "LWC",
