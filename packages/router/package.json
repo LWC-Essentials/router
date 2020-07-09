@@ -27,7 +27,8 @@
     "url": "git+https://github.com/LWC-Essentials/router.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "lint": "eslint src"
   },
   "bugs": {
     "url": "https://github.com/LWC-Essentials/router/issues"
@@ -36,8 +37,13 @@
     "history": "^4.10.1",
     "path-to-regexp": "^6.1.0"
   },
+  "devDependencies": {
+    "@lwc/eslint-plugin-lwc": "^0.10.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0"
+  },
   "peerDependencies": {
-    "lwc": "^1.7.1"
+    "lwc": "^1.7.2"
   },
   "lwc": {
     "modules": [

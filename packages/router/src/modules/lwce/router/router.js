@@ -8,7 +8,6 @@ const historyContextProvider = createContextProvider(history);
 export default class Router extends LightningElement {
   @api base = "";
   routes = [];
-  setup = false;
 
   @api getHistory() {
     return this.history;
@@ -27,21 +26,17 @@ export default class Router extends LightningElement {
     );
 
     this.history = createBrowserHistory();
-    this.unlisten = this.history.listen((location, action) => {
+    this.unlisten = this.history.listen((location) => {
       this.checkRoutes(location);
     });
   }
 
-  renderedCallback() {
-    if (!this.setup) {
-      this.setup = true;
-
-      historyContextProvider(this, {
-        consumerConnectedCallback: consumer => {
-          consumer.provide(this.history);
-        },
-      });
-    }
+  connectedCallback() {
+    historyContextProvider(this, {
+      consumerConnectedCallback: (consumer) => {
+        consumer.provide(this.history);
+      },
+    });
   }
 
   disconnectedCallback() {
@@ -60,14 +55,12 @@ export default class Router extends LightningElement {
   removeRoute(event) {
     event.stopPropagation();
 
-    this.routes.push(event.detail);
-
     const indexToRemove = this.routes.findIndex(
       (route) =>
-        route.path === detail.path && route.callback === detail.callback
+        route.path === event.detail.path && route.callback === event.detail.callback
     );
 
-    if (routeToRemove === -1) console.warn("Cannot find route to remove!");
+    if (indexToRemove === -1) console.warn("Cannot find route to remove!");
     else this.routes.splice(indexToRemove, 1);
 
     this.checkRoutes(window.location);

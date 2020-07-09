@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { routeParams, history } from '@lwce/router';
 
 export default class Link extends LightningElement {

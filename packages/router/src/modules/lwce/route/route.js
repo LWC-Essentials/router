@@ -1,6 +1,5 @@
 import { LightningElement, api, createContextProvider } from "lwc";
 import { routeParams } from "../../../wire-adapters/route-params";
-import route from "./route.html";
 
 const routeParamsContextProvider = createContextProvider(routeParams);
 
@@ -27,7 +26,6 @@ export default class Route extends LightningElement {
 
   routeParams = {};
   rendered = false;
-  setup = false;
   wireAdapters = [];
 
   constructor() {
@@ -48,23 +46,6 @@ export default class Route extends LightningElement {
       "lwcerouter_removeeventlistener",
       this.interceptChildRouteEvent.bind(this, "lwcerouter_removeeventlistener")
     );
-  }
-
-
-  renderedCallback() {
-    if (!this.setup) {
-      this.setup = true;
-
-      routeParamsContextProvider(this, {
-        consumerConnectedCallback: consumer => {
-          this.wireAdapters.push(consumer);
-          this.sendRouteParams();
-        },
-        consumerDisconnectedCallback: consumer => {
-          this.wireAdapters.splice(this.wireAdapters.indexOf(consumer), 1);
-        }
-      });
-    }
   }
 
   interceptChildRouteEvent(name, event) {
@@ -91,6 +72,16 @@ export default class Route extends LightningElement {
     ) {
       throw new Error("A default route cannot have other parameters!");
     }
+
+    routeParamsContextProvider(this, {
+      consumerConnectedCallback: (consumer) => {
+        this.wireAdapters.push(consumer);
+        this.sendRouteParams();
+      },
+      consumerDisconnectedCallback: (consumer) => {
+        this.wireAdapters.splice(this.wireAdapters.indexOf(consumer), 1);
+      },
+    });
 
     this.dispatchEvent(
       new CustomEvent("lwcerouter_addrouteeventlistener", {

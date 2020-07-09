@@ -8,7 +8,8 @@
     "start": "lerna run start",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
-    "postinstall": "npm run bootstrap"
+    "postinstall": "npm run bootstrap",
+    "lint": "lerna run lint"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,9 @@
   },
   "homepage": "https://github.com/LWC-Essentials/router#readme",
   "devDependencies": {
-    "lerna": "^3.20.2"
+    "lerna": "^3.20.2",
+    "@lwc/eslint-plugin-lwc": "^0.10.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0"
   }
 }
