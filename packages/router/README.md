@@ -69,10 +69,12 @@ Define a link to navigate between your routes
 
 `href`: A string representation of your destination. This can be a relative path.
 
+`class-name`:  Set a class to style your link
+
 Example:
 
 ```html
-<lwce-link path="/products/1234" title="Product details">
+<lwce-link class-name="styled-link" path="/products/1234" title="Product details">
   Product details
 </lwce-link>
 ```
