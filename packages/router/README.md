@@ -74,7 +74,7 @@ Define a link to navigate between your routes
 Example:
 
 ```html
-<lwce-link class-name="styled-link" path="/products/1234" title="Product details">
+<lwce-link class-name="styled-link" href="/products/1234" title="Product details">
   Product details
 </lwce-link>
 ```
